@@ -27,7 +27,7 @@ This section addresses migrating openshift projects, cluster level configuration
 * [Capture Egress Network Policies data](7.EgressNetworkPolicies.md)
 * Apply NetworkPolicies based on EgressNetworkPolicies and NetNamespaces (WIP)
 
-All the steps in the above documentation links should be read. Once you read and understand, you can run the following scripts rather than individually copy pasting the scripts
+**All the steps in the above documentation links should be read.** Once you read and understand, you can run the following scripts rather than individually copy pasting the scripts. These scripts will generate a folder named `projectconfigs` with the manifests that can be applied to the target GKE Cluster.
 
 * Run script#1 that exports namespaces, clusterresourcequotas and cluster roles.
 
