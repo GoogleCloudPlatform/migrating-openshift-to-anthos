@@ -77,7 +77,6 @@ for ns in $(ls clusterconfigs/namespaces); do
         cmd[6]=${cmd[6]//NAMESPACE/$ns}; \
         for i in $("${cmd[@]}"); do \
             echo "Exporting Rolebinding Namespace: " $ns "Role: " $role "RB: " $i 
-            mkdir -p projectconfigs/namespaceconfigs/$ns/rolebindings
             oc get rolebinding $i -n $ns -o yaml \
             | yq e 'del(.metadata.creationTimestamp)' - \
             | yq e 'del(.metadata.resourceVersion)' - \
@@ -95,7 +94,6 @@ for ns in $(ls clusterconfigs/namespaces); do
     for sa in $(ls clusterconfigs/namespaces/$ns/*-sa.yaml 2> /dev/null | xargs -n 1 basename 2> /dev/null | sed -e 's/-sa\.yaml$//'); do
         for i in $(oc get rolebindings -n $ns -o yaml | yq e '.items[] | select(.subjects[].name == "'$sa'") | .metadata.name' -); do
             echo "Exporting Rolebinding Namespace: " $ns "SA: " $sa "RB: " $i
-            mkdir -p projectconfigs/namespaceconfigs/$ns/rolebindings
             oc get rolebinding $i -n $ns -o yaml \
             | yq e 'del(.metadata.creationTimestamp)' - \
             | yq e 'del(.metadata.resourceVersion)' - \
