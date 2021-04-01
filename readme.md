@@ -3,9 +3,6 @@
 
 This guide provides scripts and tools to migration cluster configurations and workloads from an OpenShift Cluster to Anthos or GKE Cluster.
 
-## Migrating OpenShift SCCs to ACM Constraints
-WIP
-
 ## Migrating OpenShift Project Configurations
 
 This section addresses migrating openshift projects, cluster level configurations and project level configurations to the target cluster. This process is semi-automated because certain decisions require choices to be made by the person who is migrating. Also the procedure allows you to either migration an application at a time or all the workloads running on a cluster.
@@ -46,6 +43,22 @@ chmod +x ./scripts/migrateScript2.sh
 * Review the Service Accounts, Roles and RoleBindings that are generated in the individual namespace folders and remove the ones that don't need to be migrated to the target cluster
 * Review ClusterResourceQuotas in `clusterconfigs/to-review/cluster-resource-quotas` and copy the templates to create namespace specific quotas in the namespace folders with namespace based allocations
 * Review NetNamespaces in the `clusterconfigs/to-review/net-namespaces` folder. **Handling TBD**
+
+## Deploy Configurations with Anthos Config Manager (ACM)
+
+* Stand up a Anthos cluster if you don't already have one
+* [Install nomos](https://cloud.google.com/kubernetes-engine/docs/add-on/config-sync/how-to/nomos-command)
+* Initialize `clusterconfigs` repo  
+```
+cd clusterconfigs
+nomos init --force
+```
+* Create a git repository to host the structure. Initialize the `clusterconfig` folder as a git repo and push the to git repo.
+* [Install ConfigSync](https://cloud.google.com/kubernetes-engine/docs/add-on/config-sync/how-to/installing). Configure the git repo as the Sync Repo
+* Login to the Anthos Cluster and verify that the manifests from the repository are applied.
+
+## Migrating OpenShift SCCs to ACM Constraints
+WIP
 
 ## Migrating Workloads to Target GKE Cluster
 WIP
