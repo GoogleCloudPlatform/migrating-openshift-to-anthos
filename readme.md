@@ -13,8 +13,8 @@ This section addresses migrating openshift projects, cluster level configuration
 ### Prerequisites
 
 * Linux bash shell: These scripts have been tested on google cloud console
-* oc - openshift client. Login to the OpenShift cluster from which you are migrating.
-* yq - yaml parsing tool
+* `oc` - [openshift client](https://docs.openshift.com/container-platform/4.7/cli_reference/openshift_cli/getting-started-cli.html#installing-openshift-cli). Login to the OpenShift cluster from which you are migrating.
+* `yq` - [yaml processing tool](https://github.com/mikefarah/yq#install)
 
 ### Export Project Configurations
 
@@ -25,9 +25,9 @@ This section addresses migrating openshift projects, cluster level configuration
 * [Export Project Level Resource Quotas](5.ResourceQuotas.md)
 * [Export Project Level Service Accounts, Roles and RoleBindings](6.RolesAndRoleBindings.md)
 * [Capture Egress Network Policies data](7.EgressNetworkPolicies.md)
-* Apply NetworkPolicies based on EgressNetworkPolicies and NetNamespaces (WIP)
+* Apply NetworkPolicies based on EgressNetworkPolicies (WIP)
 
-**All the steps in the above documentation links should be read.** Once you read and understand, you can run the following scripts rather than individually copy pasting the scripts. These scripts will generate a folder named `projectconfigs` with the manifests that can be applied to the target GKE Cluster.
+**All the steps in the above documentation links should be read.** Once you read and understand, you can run the following scripts rather than individually copy pasting the scripts. These scripts will generate a folder named `clusterconfigs` with the manifests that can be applied to the target GKE Cluster. The folder structure follows [ACM repo layout](https://cloud.google.com/kubernetes-engine/docs/add-on/config-sync/concepts/repo). You can create a git repo and apply this using [ConfigSync](https://cloud.google.com/kubernetes-engine/docs/add-on/config-sync/overview) to an Anthos Cluster.
 
 * Run script#1 that exports namespaces, clusterresourcequotas and cluster roles.
 
@@ -35,9 +35,8 @@ This section addresses migrating openshift projects, cluster level configuration
 chmod +x ./scripts/migrateScript1.sh
 ./scripts/migrateScript1.sh
 ```
-* Review the namespace manifests generated in the `projectconfigs/namespaces` and remove the ones that don't need to be migrated
-* Review ClusterRoles in the `projectconfigs/cluster-roles` folder and remove the ones that don't need to be migrated
-* Review NetNamespaces in the `projectconfigs/net-namespaces` folder and remove the ones that are not required.
+* Review the namespace manifests generated in the `clusterconfigs/namespaces` and remove the ones that don't need to be migrated
+* Review ClusterRoles in the `clusterconfigs/cluster/cluster-roles` folder and remove the ones that don't need to be migrated
 * Run script#2 to export ClusterRoleBindings and namespace Level configurations.
 
 ```
@@ -45,7 +44,8 @@ chmod +x ./scripts/migrateScript2.sh
 ./scripts/migrateScript2.sh
 ```
 * Review the Service Accounts, Roles and RoleBindings that are generated in the individual namespace folders and remove the ones that don't need to be migrated to the target cluster
-* Review ResourceQuotas and copy the templates to create namespace specific quotas in the namespace folders
+* Review ClusterResourceQuotas in `clusterconfigs/to-review/cluster-resource-quotas` and copy the templates to create namespace specific quotas in the namespace folders with namespace based allocations
+* Review NetNamespaces in the `clusterconfigs/to-review/net-namespaces` folder. **Handling TBD**
 
 ## Migrating Workloads to Target GKE Cluster
 WIP
