@@ -44,7 +44,7 @@ chmod +x ./scripts/migrateScript2.sh
 * Review ClusterResourceQuotas in `clusterconfigs/to-review/cluster-resource-quotas` and copy the templates to create namespace specific quotas in the namespace folders with namespace based allocations
 * Review NetNamespaces in the `clusterconfigs/to-review/net-namespaces` folder. **Handling TBD**
 
-## Deploy Configurations with Anthos Config Manager (ACM)
+## Apply Configurations with Anthos Config Manager (ACM)
 
 * Stand up a Anthos cluster if you don't already have one
 * [Install nomos](https://cloud.google.com/kubernetes-engine/docs/add-on/config-sync/how-to/nomos-command)
