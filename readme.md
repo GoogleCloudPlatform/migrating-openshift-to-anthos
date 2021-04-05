@@ -46,7 +46,7 @@ chmod +x ./scripts/migrateScript2.sh
 
 ## Apply Configurations with Anthos Config Manager (ACM)
 
-* Stand up a Anthos cluster if you don't already have one
+* Stand up a Anthos cluster if you don't already have one and [install Anthos Config Management Components](https://cloud.google.com/anthos-config-management/docs/how-to/installing)
 * [Install nomos](https://cloud.google.com/kubernetes-engine/docs/add-on/config-sync/how-to/nomos-command)
 * Initialize `clusterconfigs` repo  
 ```
@@ -58,7 +58,28 @@ nomos init --force
 * Login to the Anthos Cluster and verify that the manifests from the repository are applied.
 
 ## Migrating OpenShift SCCs to ACM Constraints
-WIP
+
+Security Policies will be applied on the Anthos Cluster using ACM Policy Controller.  [Constraints](https://cloud.google.com/anthos-config-management/docs/how-to/creating-constraints) can be created using [constraint template library](https://cloud.google.com/anthos-config-management/docs/how-to/creating-constraints#constraint-template-library) that google provides or you can write your own constraint templates.
+
+* [Install Policy Controller](https://cloud.google.com/anthos-config-management/docs/how-to/installing-policy-controller). Exclude the following namespaces from policy controller (refer Exempt namespaces). Review the list, you may have more to exclude depending on which namespaces you don't want to apply policies to.
+
+```
+kube-system
+kube-public
+gke-connect
+gke-system
+config-management-system
+gatekeeper-system
+istio-system
+cnrm-system
+knative-serving
+monitoring-system
+```
+* Verify that the constraint policy templates are installed by running `kubectl get constrainttemplates`
+
+* [Set up Restricted Constraints on the cluster](8.SetupRestrictedConstraints.md)
+
+* Relax constraints for special workloads (WIP)
 
 ## Migrating Workloads to Target GKE Cluster
 WIP
