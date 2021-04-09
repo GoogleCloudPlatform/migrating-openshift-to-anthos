@@ -11,7 +11,8 @@ This section addresses migrating openshift projects, cluster level configuration
 
 * Linux bash shell: These scripts have been tested on an Ubuntu linux box
 
-* `oc` - [openshift client](https://docs.openshift.com/container-platform/4.7/cli_reference/openshift_cli/getting-started-cli.html#installing-openshift-cli). Login to the OpenShift cluster from which you are migrating.
+* `oc` - [openshift client](https://docs.openshift.com/container-platform/4.7/cli_reference/openshift_cli/getting-started-cli.html#installing-openshift-cli). Login to the OpenShift cluster from which you are migrating. These scripts expect that you have **cluster-wide read** access to the openshift cluster so that you are able to export cluster configuration
+
 * `yq` - [yaml processing tool](https://github.com/mikefarah/yq#install)
 * Install [Google Cloud SDK](https://cloud.google.com/sdk/docs/install) and login with your Google credentials via SDK
 
@@ -84,6 +85,22 @@ monitoring-system
 * Relax constraints for special workloads (WIP)
 
 ## Migrating Workloads to Target GKE Cluster
+
+* [Export Application Manifests](./10.ExportApplicationManifests.md) such as deployment configurations, deployments, services, routes, persistent volumes, config maps from each namespace on the OpenShift cluster. 
+
+    These can be exported individually on a per namespace basis or you can run the following script to export them for all the selected namespaces in `clusterconfigs/namespaces` folder. The source manifests are copied into `ocp-manifests/namespaces` folder in order to convert them in the next step.
+
+    ```
+    ./scripts/exportApplicationManifests.sh
+    ```
+    **CAUTION** While secrets can also be copied from the OpenShift cluster, since this is sensitive data you may want to use discretion on copying secrets vs applying them directly on the target cluster. So, DON'T RUN THE COMMAND BELOW until you are ABSOLUTELY SURE that you want to copy secrets from the source cluster.
+
+    ```
+    ./scripts/exportSecrets.sh
+    ```
+
+* [Migrate Images from OpenShift Internal Registry](./11.TransferApplicationImages.md), if required. This is needed only if the application images are stored in OpenShift Internal Registry. 
+
 WIP
 
 ## Migrate Persistent Data
