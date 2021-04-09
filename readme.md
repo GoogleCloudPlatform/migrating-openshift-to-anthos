@@ -9,9 +9,11 @@ This section addresses migrating openshift projects, cluster level configuration
 
 ### Prerequisites
 
-* Linux bash shell: These scripts have been tested on google cloud shell
+* Linux bash shell: These scripts have been tested on an Ubuntu linux box
+
 * `oc` - [openshift client](https://docs.openshift.com/container-platform/4.7/cli_reference/openshift_cli/getting-started-cli.html#installing-openshift-cli). Login to the OpenShift cluster from which you are migrating.
 * `yq` - [yaml processing tool](https://github.com/mikefarah/yq#install)
+* Install [Google Cloud SDK](https://cloud.google.com/sdk/docs/install) and login with your Google credentials via SDK
 
 ### Export Project Configurations
 
