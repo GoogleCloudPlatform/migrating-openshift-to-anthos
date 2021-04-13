@@ -103,7 +103,7 @@ monitoring-system
 
 * [Migrate Images from OpenShift Internal Registry](./11.TransferApplicationImages.md), if required. This is needed only if the application images are stored in OpenShift Internal Registry. 
 
-* [Migration Application Workloads]() to the target cluster. This uses [Shifter tool](https://github.com/garybowers/shifter) that converts OpenShift manifests to kubernetes manifests. While all the above steps are handled for the entire cluster, we recommend migrating application workloads one namespace at a time. 
+* [Migration Application Workloads](./12.MigrateApplications.md) to the target cluster. This uses [Shifter tool](https://github.com/garybowers/shifter) that converts OpenShift manifests to kubernetes manifests. While all the above steps are handled for the entire cluster, we recommend migrating application workloads one namespace at a time. 
 
 
 
