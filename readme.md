@@ -15,6 +15,8 @@ This section addresses migrating openshift projects, cluster level configuration
 
 * `yq` - [yaml processing tool](https://github.com/mikefarah/yq#install)
 * Install [Google Cloud SDK](https://cloud.google.com/sdk/docs/install) and login with your Google credentials via SDK
+* Install kubernetes clients such as kubectl, kubectx
+* A target GKE cluster is set up and you have access to deploy applications to that cluster
 
 ### Export Project Configurations
 
