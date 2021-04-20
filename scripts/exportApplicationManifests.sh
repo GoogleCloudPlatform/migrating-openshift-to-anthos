@@ -62,6 +62,7 @@ for ns in $(ls clusterconfigs/namespaces); do
             | yq e 'del(.metadata.uid)' - \
             | yq e 'del(.status)' -  \
             | yq e 'del(.spec.clusterIP)' -  \
+            | yq e 'del(.spec.clusterIPs)' -  \
             > ocp-manifests/namespaces/$ns/$service-service.yaml
 
     done;
