@@ -12,6 +12,7 @@ if grep -v "$PROJECT_FILTERS" <<< $i ; then
     | yq e '.kind |= "Namespace"' - \
     | yq e 'del(.metadata.creationTimestamp)' - \
     | yq e 'del(.metadata.annotations.*)' - \
+    | yq e 'del(.metadata.managedFields)' - \
     | yq e 'del(.metadata.labels)' - \
     | yq e 'del(.metadata.resourceVersion)' - \
     | yq e 'del(.metadata.selfLink)' - \
