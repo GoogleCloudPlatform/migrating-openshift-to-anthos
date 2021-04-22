@@ -15,6 +15,7 @@ for ns in $(ls clusterconfigs/namespaces); do
             | yq e 'del(.metadata.selfLink)' - \
             | yq e 'del(.metadata.uid)' - \
             | yq e 'del(.metadata.generation)' - \
+            | yq e 'del(.metadata.managedFields)' - \
             | yq e 'del(.status)' -  \
             > ocp-manifests/namespaces/$ns/$dc-dc.yaml;
     done;
@@ -60,6 +61,7 @@ for ns in $(ls clusterconfigs/namespaces); do
             | yq e 'del(.metadata.resourceVersion)' - \
             | yq e 'del(.metadata.selfLink)' - \
             | yq e 'del(.metadata.uid)' - \
+            | yq e 'del(.metadata.managedFields)' - \
             | yq e 'del(.status)' -  \
             | yq e 'del(.spec.clusterIP)' -  \
             | yq e 'del(.spec.clusterIPs)' -  \
@@ -78,6 +80,7 @@ for ns in $(ls clusterconfigs/namespaces); do
             | yq e 'del(.metadata.resourceVersion)' - \
             | yq e 'del(.metadata.selfLink)' - \
             | yq e 'del(.metadata.uid)' - \
+            | yq e 'del(.metadata.managedFields)' - \
             | yq e 'del(.status)' - \
             > ocp-manifests/namespaces/$ns/$route-route.yaml
 
@@ -92,6 +95,7 @@ for ns in $(ls clusterconfigs/namespaces); do
             | yq e 'del(.metadata.resourceVersion)' - \
             | yq e 'del(.metadata.selfLink)' - \
             | yq e 'del(.metadata.uid)' - \
+            | yq e 'del(.metadata.managedFields)' - \
             | yq e 'del(.status)' - \
             > ocp-manifests/namespaces/$ns/$cm-cm.yaml
 
@@ -106,6 +110,7 @@ for ns in $(ls clusterconfigs/namespaces); do
             | yq e 'del(.metadata.resourceVersion)' - \
             | yq e 'del(.metadata.selfLink)' - \
             | yq e 'del(.metadata.uid)' - \
+            | yq e 'del(.metadata.managedFields)' - \
             | yq e 'del(.status)' - \
             > ocp-manifests/namespaces/$ns/$pvc-pvc.yaml
 
