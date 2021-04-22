@@ -12,6 +12,7 @@ for role in $(ls clusterconfigs/cluster/cluster-roles | sed -e 's/\.yaml$//'); d
   yq e 'del(.metadata.creationTimestamp)' - \
   | yq e 'del(.metadata.resourceVersion)' - \
   | yq e 'del(.metadata.selfLink)' - \
+  | yq e 'del(.metadata.managedFields)' - \
   | yq e 'del(.metadata.uid)' -  - > clusterconfigs/cluster/cluster-role-bindings/$i.yaml; \
 done; done
 
