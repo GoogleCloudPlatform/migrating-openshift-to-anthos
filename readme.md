@@ -1,7 +1,22 @@
 # Migration from OpenShift to Anthos/GKE Cluster
 [DRAFT]
 
-This guide provides scripts and tools to migration cluster configurations and workloads from an OpenShift Cluster to Anthos or GKE Cluster.
+This guide provides scripts and tools to migration cluster configurations and workloads from an OpenShift Cluster to Anthos or GKE Cluster. It assumes that the users have prior working experience with Kubernetes and OpenShift. This material focuses on actual migration using scripts and tooling. We assume that you already have an OpenShift cluster with applications running on it to migrate to the target cluster. 
+
+In case you using this material to prepare or try hands-on all by yourself, you don't have an openshift cluster with applications running this [demo application setup](./0.DemoClusterandApplication.md) may be helpful.
+
+## Scope and Assumptions
+
+### In Scope
+* Migration targets a single OpenShift source cluster to a single GKE/Anthos target cluster at a time
+* Considers running application workloads such as deployments, services, and ingress mechanisms and related artifacts such as config maps, images etc.
+
+### Out of Scope
+* Migrating builds and CICD are currenty out of scope. Build and CICD mechanisms have to be set up independently to point to the target cluster and registry.
+* Migrating applications that may span multiple clusters is out of scope
+* Migrating multiple environments such as a development cluster, test cluster and production cluster as a group is out of scope. Each cluster migration should be handled independently.
+
+
 
 ## Migrating OpenShift Project Configurations
 
@@ -11,7 +26,7 @@ This section addresses migrating openshift projects, cluster level configuration
 
 * Linux bash shell: These scripts have been tested on an Ubuntu linux box
 
-* `oc` - [openshift client](https://docs.openshift.com/container-platform/4.7/cli_reference/openshift_cli/getting-started-cli.html#installing-openshift-cli). Login to the OpenShift cluster from which you are migrating. These scripts expect that you have **cluster-wide read** access to the openshift cluster so that you are able to export cluster configuration
+* `oc` - [openshift client](https://docs.openshift.com/container-platform/4.7/cli_reference/openshift_cli/getting-started-cli.html#installing-openshift-cli). Login to the OpenShift cluster from which you are migrating. These scripts expect that you have [**cluster-wide read** access](./0.DemoClusterandApplication.md#create-a-cluster-viewer-role) to the openshift cluster so that you are able to export cluster configuration
 
 * `yq` - [yaml processing tool](https://github.com/mikefarah/yq#install)
 * Install [Google Cloud SDK](https://cloud.google.com/sdk/docs/install) and login with your Google credentials via SDK
