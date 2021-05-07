@@ -95,15 +95,20 @@ cnrm-system
 knative-serving
 monitoring-system
 ```
+* After you set up Policy Controller with the above exceptions you need to add to each of the exempted namespaces the following label to actually exclude them from constraints application:
+```
+admission.gatekeeper.sh/ignore=true
+```
+If you don’t do that, system Pods and, consequently, your entire cluster, can be affected by restrictive policies.
+
 * Verify that the constraint policy templates are installed by running `kubectl get constrainttemplates`
 
-* [Set up Restricted Constraints on the cluster](8.SetupRestrictedConstraints.md)
+* [Set up ACM Policy Controller Constraints on the cluster](8.SetupConstraints.md)
 
-* Relax constraints for special workloads (WIP)
 
 ## Migrating Workloads to Target GKE Cluster
 
-* [Export Application Manifests](./10.ExportApplicationManifests.md) such as deployment configurations, deployments, services, routes, persistent volumes, config maps from each namespace on the OpenShift cluster. 
+* [Export Application Manifests](./9.ExportApplicationManifests.md) such as deployment configurations, deployments, services, routes, persistent volumes, config maps from each namespace on the OpenShift cluster. 
 
     These can be exported individually on a per namespace basis or you can run the following script to export them for all the selected namespaces in `clusterconfigs/namespaces` folder. The source manifests are copied into `ocp-manifests/namespaces` folder in order to convert them in the next step.
 
@@ -116,9 +121,9 @@ monitoring-system
     ./scripts/exportSecrets.sh
     ```
 
-* [Migrate Images from OpenShift Internal Registry](./11.TransferApplicationImages.md), if required. This is needed only if the application images are stored in OpenShift Internal Registry. 
+* [Migrate Images from OpenShift Internal Registry](./10.TransferApplicationImages.md), if required. This is needed only if the application images are stored in OpenShift Internal Registry. 
 
-* [Migration Application Workloads](./12.MigrateApplications.md) to the target cluster. This uses [Shifter tool](https://github.com/garybowers/shifter) that converts OpenShift manifests to kubernetes manifests. While all the above steps are handled for the entire cluster, we recommend migrating application workloads one namespace at a time. 
+* [Migration Application Workloads](./11.MigrateApplications.md) to the target cluster. This uses [Shifter tool](https://github.com/garybowers/shifter) that converts OpenShift manifests to kubernetes manifests. While all the above steps are handled for the entire cluster, we recommend migrating application workloads one namespace at a time. 
 
 
 

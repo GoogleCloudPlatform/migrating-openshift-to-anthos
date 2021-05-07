@@ -33,24 +33,51 @@ spec:
 apiVersion: constraints.gatekeeper.sh/v1beta1
 kind: K8sPSPCapabilities
 metadata:
-  name: psp-capabilities
+  name: restricted-capabilities
 spec:
   match:
     kinds:
       - apiGroups: [""]
         kinds: ["Pod"]
+    namespaceSelector:
+      matchExpressions:
+        - operator: NotIn
+          key: security 
+          values: ["anyuid"] 
   parameters:
     requiredDropCapabilities: ["KILL","MKNOD","SYS_CHROOT"]
 ---
 apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: K8sPSPCapabilities
+metadata:
+  name: anyuid-capabilities
+spec:
+  match:
+    kinds:
+      - apiGroups: [""]
+        kinds: ["Pod"]
+    namespaceSelector:
+      matchExpressions:
+        - operator: In
+          key: security 
+          values: ["anyuid"]
+  parameters:
+    requiredDropCapabilities: ["MKNOD"]
+---
+apiVersion: constraints.gatekeeper.sh/v1beta1
 kind: K8sPSPAllowedUsers
 metadata:
-  name: psp-pods-allowed-user-ranges
+  name: restricted-users-and-groups
 spec:
   match:  
     kinds:
       - apiGroups: [""]
         kinds: ["Pod"]
+    namespaceSelector:
+      matchExpressions:
+        - operator: NotIn
+          key: security 
+          values: ["anyuid","nonroot"] 
   parameters:
     runAsUser:
       rule: MustRunAs # MustRunAsNonRoot # RunAsAny 
@@ -62,6 +89,26 @@ spec:
       ranges:
         - min: 1000
           max: 2000
+---
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: K8sPSPAllowedUsers
+metadata:
+  name: nonroot-users-and-groups
+spec:
+  match:  
+    kinds:
+      - apiGroups: [""]
+        kinds: ["Pod"]
+    namespaceSelector:
+      matchExpressions:
+        - operator: In
+          key: security 
+          values: ["nonroot"] 
+  parameters:
+    runAsUser:
+      rule: MustRunAsNonRoot # MustRunAs # MustRunAsNonRoot # RunAsAny 
+    fsGroup:
+      rule: MustRunAsNonRoot # MustRunAs # MustRunAsNonRoot # RunAsAny 
 ---
 apiVersion: constraints.gatekeeper.sh/v1beta1
 kind: K8sPSPVolumeTypes
