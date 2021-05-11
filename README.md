@@ -1,7 +1,6 @@
 # Migration from OpenShift to Anthos/GKE Cluster
-[DRAFT]
 
-This guide provides scripts and tools to migration cluster configurations and workloads from an OpenShift Cluster to Anthos or GKE Cluster. It assumes that the users have prior working experience with Kubernetes and OpenShift. This material focuses on actual migration using scripts and tooling. We assume that you already have an OpenShift cluster with applications running on it to migrate to the target cluster. 
+This respository provides scripts and tools to migration cluster configurations and workloads from an OpenShift Cluster to Anthos or GKE Cluster. It assumes that the users have prior working experience with Kubernetes and OpenShift. This material focuses on actual migration using scripts and tooling. We assume that you already have an OpenShift cluster with applications running on it to migrate to the target cluster. 
 
 In case you using this material to prepare or try hands-on all by yourself, you don't have an openshift cluster with applications running this [demo application setup](./0.DemoClusterandApplication.md) may be helpful.
 
