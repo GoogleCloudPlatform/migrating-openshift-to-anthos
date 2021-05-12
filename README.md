@@ -127,4 +127,6 @@ If you don’t do that, system Pods and, consequently, your entire cluster, can 
 
 
 ## Migrate Persistent Data
-WIP
+[Migration Application Workloads with Persistent Data](./12.MigrateApplications_with_PersistentData.md) could assist users to migrate Openshift workloads and persistent data to GKE/Anthos cluster. This flow follows the flow from [Migration Application Workloads](./11.MigrateApplications.md) but add an opensource tool, [Velero](https://velero.io), to include persistent data migration. To conduct this migration, an object storage (e.g. Google Cloud Storage(GCS)) is required to keep the persistent data before restoring to the target cluster.
+
+Along with the instruction, we also provide [a demo sample](./samples/0-create-samples-ocp.sh) along with [5 easy steps](./samples) to assist readers to hands-on this migration flow on GCP before handling own workloads. Users need to prepare (1) a GKE cluster, (2) a GCS bucket, and (3) your existing openshift cluster in advance to input those data into [environmental variable file](./samples/envs.sh). When running the script, please change directory into samples folder.
