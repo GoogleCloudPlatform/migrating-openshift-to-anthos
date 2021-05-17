@@ -120,9 +120,9 @@ spec:
           values: ["nonroot"] 
   parameters:
     runAsUser:
-      rule: MustRunAsNonRoot # MustRunAs # MustRunAsNonRoot # RunAsAny 
+      rule: MustRunAsNonRoot
     fsGroup:
-      rule: MustRunAsNonRoot # MustRunAs # MustRunAsNonRoot # RunAsAny 
+      rule: MustRunAsNonRoot 
 ---
 apiVersion: constraints.gatekeeper.sh/v1beta1
 kind: K8sPSPVolumeTypes
