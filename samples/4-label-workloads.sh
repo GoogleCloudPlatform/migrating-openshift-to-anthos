@@ -5,4 +5,4 @@ source envs.sh
 my_pv=$(./oc get pv | grep ${pvc_name} | awk '{print $1}')
 ./oc label pv ${my_pv} ${mylabel}
 
-velero backup create select-backup --selector ${mylabel} --default-volumes-to-restic
+velero backup create ${backup_name} --selector ${mylabel} --default-volumes-to-restic
