@@ -11,4 +11,6 @@ kubectx ${context_src}
 velero backup delete ${backup_name}
 ./oc label pvc -l service=frontend service-
 ./oc label pv -l service=frontend service-
+./oc delete -f ocp-manifests/namespaces/${ns}/
 rm -r ocp-manifests/namespaces/${ns}/*
+./oc delete ns ${ns}

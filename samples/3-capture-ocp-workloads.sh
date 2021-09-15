@@ -1,6 +1,6 @@
 #!/bin/zsh
 source envs.sh
-
+kubectx ${context_src}
 # Capture workload
 for dc in $(./oc get dc -n $ns -o jsonpath='{.items[*].metadata.name}' ); do
   echo "Exporting DeploymentConfigs: " $dc;

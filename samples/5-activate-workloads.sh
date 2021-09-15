@@ -27,4 +27,4 @@ while true; do
     sleep 10
   fi
 done
-kubectl apply -f kubernetes-manifests/namespaces/$ns/
+kubectl apply -f kubernetes-manifests/namespaces/$ns/ -n $ns
