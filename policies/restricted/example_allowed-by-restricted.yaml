@@ -30,6 +30,3 @@ spec:
     volumeMounts:
     - name: sec-ctx-vol
       mountPath: /data/demo
-    securityContext:
-      capabilities:
-        drop: ["KILL","MKNOD","SYS_CHROOT"]

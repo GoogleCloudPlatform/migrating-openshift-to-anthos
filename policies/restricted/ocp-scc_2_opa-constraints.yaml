@@ -44,6 +44,30 @@ spec:
       - apiGroups: [""]
         kinds: ["Pod"]
 ---
+apiVersion: mutations.gatekeeper.sh/v1alpha1
+kind: Assign
+metadata:
+  name: restricted-capabilities
+spec:
+  applyTo:
+  - groups: [""]
+    kinds: ["Pod"]
+    versions: ["v1"]
+  match:
+    scope: Namespaced
+    kinds:
+    - apiGroups: ["*"]
+      kinds: ["Pod"]
+    namespaceSelector:
+      matchExpressions:
+        - operator: NotIn
+          key: security 
+          values: ["anyuid"]
+  location: "spec.containers[name:*].securityContext.capabilities.drop"
+  parameters:
+    assign:
+      value: ["KILL","MKNOD","SYS_CHROOT"]
+---
 apiVersion: constraints.gatekeeper.sh/v1beta1
 kind: K8sPSPCapabilities
 metadata:
@@ -60,6 +84,30 @@ spec:
           values: ["anyuid"] 
   parameters:
     requiredDropCapabilities: ["KILL","MKNOD","SYS_CHROOT"]
+---
+apiVersion: mutations.gatekeeper.sh/v1alpha1
+kind: Assign
+metadata:
+  name: anyuid-capabilities
+spec:
+  applyTo:
+  - groups: [""]
+    kinds: ["Pod"]
+    versions: ["v1"]
+  match:
+    scope: Namespaced
+    kinds:
+    - apiGroups: ["*"]
+      kinds: ["Pod"]
+    namespaceSelector:
+      matchExpressions:
+        - operator: In
+          key: security 
+          values: ["anyuid"]
+  location: "spec.containers[name:*].securityContext.capabilities.drop"
+  parameters:
+    assign:
+      value: ["MKNOD"]
 ---
 apiVersion: constraints.gatekeeper.sh/v1beta1
 kind: K8sPSPCapabilities
